@@ -1,4 +1,4 @@
-# 7SegmentClock
+# 7 Segment Clock
 
 ![Cover](../assets/Cover.jpeg)
 
@@ -17,7 +17,7 @@ more usefull to me.
   - Displays the room teparature once a minute.
 - ESP-01 Wi-Fi Module
   - Fetch the current time on boot-up from NTP.
-  - Re-sync the ntp time perodically.
+  - Re-sync the NTP time perodically.
 
 ![Demo Animation](../assets/Demo.gif?raw=true)
 
