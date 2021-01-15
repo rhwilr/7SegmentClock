@@ -1,4 +1,4 @@
-# 7SegmentDisplay
+# 7SegmentClock
 
 ![Cover](../assets/Cover.jpeg)
 
