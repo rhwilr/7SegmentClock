@@ -18,17 +18,16 @@ void initWifi() {
   }
 }
 
-void setupWifi() {
+void setupWifi(const char* ssid, const char* passphrase) {
   WiFi.disconnect(); // to clear the way. not persistent
   WiFi.setPersistent(); // set the following WiFi connection as persistent
   WiFi.endAP(); // to disable default automatic start of persistent AP at startup
 
-#if defined(SECRET_SSID) && defined(SECRET_PASS)
   Serial.println();
   Serial.print("Attempting to connect to SSID: ");
-  Serial.println(SECRET_SSID);
+  Serial.println(ssid);
 
-  int status = WiFi.begin(SECRET_SSID, SECRET_PASS);
+  int status = WiFi.begin(ssid, passphrase);
 
   if (status == WL_CONNECTED) {
     Serial.println();
@@ -38,16 +37,12 @@ void setupWifi() {
     Serial.println();
     Serial.println("Connection to WiFi network failed.");
   }
-#else
-  Serial.println();
-  Serial.print("SECRET_SSID or SECRET_PASS not defined.");
-#endif
 }
 
 void setupNTP() {
   WiFi.sntp(TIME_ZONE, NTP_SERVER);
 
-  Serial.println("Waiting for SNTP");
+  Serial.println("Waiting for NTP");
   while (WiFi.getTime() < SECS_YR_2000) {
     delay(1000);
     Serial.print('.');

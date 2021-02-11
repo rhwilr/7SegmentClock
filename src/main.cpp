@@ -19,17 +19,24 @@ void setup() {
   Serial.begin(115200);
   while (!Serial);
   Serial.println("Start");
-  
-  initWifi();
-  setupWifi();
+
+  #if defined(SECRET_SSID) && defined(SECRET_PASS)
+    initWifi();
+    setupWifi(SECRET_SSID, SECRET_PASS);
+  #else
+    Serial.println();
+    Serial.println("SECRET_SSID or SECRET_PASS not defined.");
+    while (true);
+  #endif
+
   setupNTP();
 
-  initDisplayDriver();
   initRTC();
   syncRTC();
 
   initDHT();
 
+  initDisplayDriver();
   allSegmentsOn();
   refreshDisplays();
   delay(1000);
