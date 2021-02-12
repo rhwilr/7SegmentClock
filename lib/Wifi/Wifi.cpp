@@ -1,4 +1,5 @@
-#include <WiFiEspAT.h>
+#include "WiFi.h"
+#include "WifiNtp.h"
 #include <TimeLib.h> 
 #include "SoftwareSerial.h"
 

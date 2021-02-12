@@ -3,11 +3,14 @@
 
 #include "conf.h"
 
-#include "Debug.h"
+// #include "Debug.h"
 #include "DHTSensor.h"
 #include "DisplayDriver.h"
 #include "RTC.h"
 #include "Wifi.h"
+#include "WifiNtp.h"
+#include "MQTT.h"
+#include "State.h"
 
 int cacheTime = 0;
 
@@ -15,7 +18,11 @@ int getCacheTime(DateTime now);
 void displayTemperature();
 void displayTime();
 
+State SegmentClock;
+
 void setup() {
+  SegmentClock.powerOn = true;
+
   Serial.begin(115200);
   while (!Serial);
   Serial.println("Start");
@@ -34,28 +41,33 @@ void setup() {
   initRTC();
   syncRTC();
 
+  initMQTT(&SegmentClock, MQTT_SERVER, MQTT_PORT, MQTT_ID, MQTT_USER, MQTT_PASS);
+
   initDHT();
 
   initDisplayDriver();
-  allSegmentsOn();
+  // allSegmentsOn();
   refreshDisplays();
   delay(1000);
 }
 
 void loop() {
-  clear();
+  loopMQTT();
 
-  for(int i = 0; i < 20; ++i) {
+  if (SegmentClock.powerOn) {
     displayTime();
+  } else {
+    clear();
+    delay(200);
   }
-  
-  clear();
-  displayTemperature();
+
+  // clear();
+  // displayTemperature();
 }
 
 void displayTime() {
   DateTime now = getLocalTime();
-  debugTime(now);
+  // debugTime(now);
 
   if (getCacheTime(now) != cacheTime) {
     cacheTime = getCacheTime(now);
@@ -81,7 +93,7 @@ void displayTime() {
 
 void displayTemperature() {
   float temp = getTemperature();
-  debugTemp(temp);
+  // debugTemp(temp);
 
   letters(0, 'T');
   putPixel(2, 5, 0b00011101);

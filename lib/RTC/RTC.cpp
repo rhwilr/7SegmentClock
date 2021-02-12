@@ -2,7 +2,7 @@
 #include <Timezone.h>
 #include "RTClib.h"
 
-#include "Wifi.h"
+#include "WifiNtp.h"
 
 RTC_DS3231 rtc;
 
