@@ -55,3 +55,16 @@ void setupNTP() {
 unsigned long getNTPTime() {
   return WiFi.getTime();
 }
+
+bool reconnectWifi(const char* ssid, const char* passphrase) {
+  int status = WiFi.status();
+
+  while (status != WL_CONNECTED) {
+    Serial.println("Reconnecting");
+    status = WiFi.begin(ssid, passphrase);
+
+    return true;
+  }
+
+  return false;
+}

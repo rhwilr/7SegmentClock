@@ -35,6 +35,7 @@ void connect()
         if (client.connect(connection.id, connection.user, connection.pass))
         {
             Serial.println("connected");
+            client.subscribe(cmdTopicPower);
         }
         else
         {
@@ -59,11 +60,6 @@ void initMQTT(State *SegmentClock, const char * server, uint16_t port, const cha
     client.setCallback(mqttCallback);
 
     connect();
-
-    // Publish initial state
-
-    // Subscribe to changes
-    client.subscribe(cmdTopicPower);
 }
 
 void loopMQTT()

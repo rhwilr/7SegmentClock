@@ -52,6 +52,11 @@ void setup() {
 }
 
 void loop() {
+  if (reconnectWifi(SECRET_SSID, SECRET_PASS)) {
+    initMQTT(&SegmentClock, MQTT_SERVER, MQTT_PORT, MQTT_ID, MQTT_USER, MQTT_PASS);
+    delay(1000);
+  }
+
   loopMQTT();
 
   if (SegmentClock.powerOn) {
@@ -67,7 +72,6 @@ void loop() {
 
 void displayTime() {
   DateTime now = getLocalTime();
-  // debugTime(now);
 
   if (getCacheTime(now) != cacheTime) {
     cacheTime = getCacheTime(now);
@@ -93,7 +97,6 @@ void displayTime() {
 
 void displayTemperature() {
   float temp = getTemperature();
-  // debugTemp(temp);
 
   letters(0, 'T');
   putPixel(2, 5, 0b00011101);
