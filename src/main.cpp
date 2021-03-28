@@ -36,14 +36,14 @@ void setup() {
     while (true);
   #endif
 
-  setupNTP();
+  setupNTP(NTP_TIME_ZONE, NTP_SERVER);
 
   initRTC();
   syncRTC();
 
   initMQTT(&SegmentClock, MQTT_SERVER, MQTT_PORT, MQTT_ID, MQTT_USER, MQTT_PASS);
 
-  initDHT();
+  //initDHT();
 
   initDisplayDriver();
   // allSegmentsOn();

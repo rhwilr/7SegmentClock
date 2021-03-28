@@ -30,17 +30,12 @@ void connect()
 {
     while (!client.connected())
     {
-        Serial.println("Connecting to MQTT...");
-
         if (client.connect(connection.id, connection.user, connection.pass))
         {
-            Serial.println("connected");
             client.subscribe(cmdTopicPower);
         }
         else
         {
-            Serial.print("failed with state ");
-            Serial.print(client.state());
             delay(2000);
         }
     }
@@ -53,8 +48,6 @@ void initMQTT(State *SegmentClock, const char * server, uint16_t port, const cha
     connection.id = id;
     connection.user = user;
     connection.pass = pass;
-
-    Serial.println("Connecting to MQTT");
 
     client.setServer(server, port);
     client.setCallback(mqttCallback);

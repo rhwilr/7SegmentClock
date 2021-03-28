@@ -6,9 +6,6 @@
 SoftwareSerial Serial1(9, 8); // RX, TX
 #define AT_BAUD_RATE 9600
 
-const int8_t TIME_ZONE = 0; // UTC
-const char NTP_SERVER[] = "0.ch.pool.ntp.org";
-
 void initWifi() {
   Serial1.begin(AT_BAUD_RATE);
   WiFi.init(Serial1);
@@ -40,16 +37,16 @@ void setupWifi(const char* ssid, const char* passphrase) {
   }
 }
 
-void setupNTP() {
-  WiFi.sntp(TIME_ZONE, NTP_SERVER);
+void setupNTP(int8_t timezone, const char* server) {
+  WiFi.sntp(timezone, server);
 
   Serial.println("Waiting for NTP");
   while (WiFi.getTime() < SECS_YR_2000) {
     delay(1000);
     Serial.print('.');
   }
-  Serial.println();
 
+  Serial.println();
 }
 
 unsigned long getNTPTime() {

@@ -14,8 +14,6 @@ TimeChangeRule mesz = {"MESZ", Last, Sun, Mar, 2, 120};    // UTC + 2 hours
 Timezone middleEu(mez, mesz);
 
 void syncRTC() {
-  Serial.println("Fetching NTP time...");  
-
   unsigned long time = getNTPTime();
   rtc.adjust(DateTime(time));
 }
